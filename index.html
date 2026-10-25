@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CulinaryCraft — Team Recipe Book & Git Collaboration Lab</title>
+  <meta name="description" content="A collaborative recipe website built with HTML5 and CSS3, demonstrating real-world Git branching, merge conflicts, and GitHub pull requests.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/recipes.css">
+</head>
+<body>
+
+  <!-- Site Navigation -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo" id="brand-logo">
+        <span class="logo-badge">🍳</span>
+        <span>Culinary<span class="accent">Craft</span></span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="pages/recipes.html">All Recipes</a></li>
+          <li><a href="pages/breakfast.html">Breakfast</a></li>
+          <li><a href="pages/desserts.html">Desserts</a></li>
+          <li><a href="pages/collaboration.html">Git Collab Lab</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="pages/collaboration.html" class="btn-lab" id="nav-lab-btn">
+          <span>Git Lab</span>
+          <span class="git-badge-pill">3 Conflicts</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Banner -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="hero-tagline">
+            <span class="dot"></span>
+            <span>Collaborative Git Edition • HTML5 & CSS3</span>
+          </div>
+          <h1>Delicious Recipes,<br>Crafted as a <span class="highlight">Team</span>.</h1>
+          <p class="hero-description">
+            Explore curated breakfast, dinner, and sweet treats crafted by our developer kitchen. Built from scratch with pure HTML & CSS while demonstrating professional Git branches, pull requests, and planned merge conflict resolution.
+          </p>
+          <div class="hero-actions">
+            <a href="pages/recipes.html" class="btn btn-primary" id="hero-explore-btn">Browse All Recipes →</a>
+            <a href="pages/collaboration.html" class="btn btn-outline" id="hero-git-btn">Inspect Git Conflicts</a>
+          </div>
+        </div>
+
+        <div class="hero-card-preview">
+          <div class="hero-image-card">
+            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80" alt="Fresh Gourmet Culinary Spread" loading="eager">
+          </div>
+          <div class="floating-stat-badge">
+            <div class="floating-stat-icon">🌿</div>
+            <div class="floating-stat-text">
+              <strong>100% Home Cooked</strong>
+              <span>Tested & code reviewed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+      <div class="container">
+        <div class="categories-grid">
+          <a href="pages/breakfast.html" class="category-card" id="cat-breakfast">
+            <div class="category-icon">🥞</div>
+            <div class="category-info">
+              <h3>Breakfast</h3>
+              <p>Pancakes, toasts & bowls</p>
+            </div>
+          </a>
+
+          <a href="pages/recipes.html" class="category-card" id="cat-lunch">
+            <div class="category-icon">🥗</div>
+            <div class="category-info">
+              <h3>Lunch</h3>
+              <p>Fresh salads & wraps</p>
+            </div>
+          </a>
+
+          <a href="pages/recipes.html" class="category-card" id="cat-dinner">
+            <div class="category-icon">🍝</div>
+            <div class="category-info">
+              <h3>Dinner</h3>
+              <p>Hearty pastas & roasts</p>
+            </div>
+          </a>
+
+          <a href="pages/desserts.html" class="category-card" id="cat-dessert">
+            <div class="category-icon">🍓</div>
+            <div class="category-info">
+              <h3>Desserts</h3>
+              <p>Fruit bowls & tarts</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Recipes Section -->
+    <section class="recipe-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <p class="section-subtitle">Chef's Highlights</p>
+            <!-- 
+              NOTE: This heading was the subject of Git Conflict Scenario 1!
+              Original: <h2>Our Favorite Recipes</h2>
+              Developer A: <h2>Breakfast Favorites</h2>
+              Developer B: <h2>Community Recipe Collection</h2>
+              Resolved: <h2>Community Recipe Collection</h2>
+            -->
+            <h2 class="section-title" id="featured-heading">Community Recipe Collection</h2>
+          </div>
+          <a href="pages/recipes.html" class="section-link">View complete collection →</a>
+        </div>
+
+        <div class="recipe-grid">
+          <!-- Recipe Card 1: Pancakes (Developer A) -->
+          <article class="recipe-card" id="recipe-card-pancakes">
+            <div class="recipe-card-media">
+              <span class="tag tag-breakfast recipe-card-tag">Breakfast</span>
+              <img src="https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=800&q=80" alt="Fluffy Blueberry Buttermilk Pancakes" loading="lazy">
+              <div class="recipe-card-cooktime">⏱ 20 mins</div>
+            </div>
+            <div class="recipe-card-body">
+              <div class="recipe-meta-row">
+                <span>🔥 Easy • 4 Servings</span>
+                <span>⭐ 4.9 (128)</span>
+              </div>
+              <h3 class="recipe-title"><a href="recipes/pancakes.html">Golden Buttermilk Pancakes</a></h3>
+              <p class="recipe-excerpt">
+                Ultra-fluffy buttermilk pancakes stacked tall with dripping maple butter and sweet fresh organic blueberries.
+              </p>
+              <div class="recipe-footer">
+                <div class="author-chip">
+                  <span class="author-avatar">A</span>
+                  <span>Dev A (Breakfast)</span>
+                </div>
+                <a href="recipes/pancakes.html" class="view-recipe-btn">Get Recipe →</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Recipe Card 2: Fettuccine Alfredo (Developer B / Conflict 3 Subject) -->
+          <article class="recipe-card" id="recipe-card-pasta">
+            <div class="recipe-card-media">
+              <span class="tag tag-dinner recipe-card-tag">Dinner</span>
+              <img src="https://images.unsplash.com/photo-1621996346565-e3d5d6281290?auto=format&fit=crop&w=800&q=80" alt="Creamy Fettuccine Alfredo Pasta" loading="lazy">
+              <div class="recipe-card-cooktime">⏱ 25 mins</div>
+            </div>
+            <div class="recipe-card-body">
+              <div class="recipe-meta-row">
+                <span>🔥 Medium • 2 Servings</span>
+                <span>⭐ 4.8 (94)</span>
+              </div>
+              <h3 class="recipe-title"><a href="recipes/pasta.html">Creamy Fettuccine Alfredo</a></h3>
+              <p class="recipe-excerpt">
+                Silky garlic parmesan cream sauce gently tossed with bronze-die tagliatelle pasta and fresh cracked black pepper.
+              </p>
+              <div class="recipe-footer">
+                <div class="author-chip">
+                  <span class="author-avatar" style="background:#dbeafe; color:#1d4ed8;">B</span>
+                  <span>Dev B (Dinner)</span>
+                </div>
+                <a href="recipes/pasta.html" class="view-recipe-btn">Get Recipe →</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Recipe Card 3: Fresh Fruit Salad (Shared/Collaboration) -->
+          <article class="recipe-card" id="recipe-card-fruitsalad">
+            <div class="recipe-card-media">
+              <span class="tag tag-dessert recipe-card-tag">Dessert</span>
+              <img src="https://images.unsplash.com/photo-1519996529931-28324d5a630e?auto=format&fit=crop&w=800&q=80" alt="Vibrant Rainbow Fruit Salad Bowl" loading="lazy">
+              <div class="recipe-card-cooktime">⏱ 15 mins</div>
+            </div>
+            <div class="recipe-card-body">
+              <div class="recipe-meta-row">
+                <span>🔥 Very Easy • 4 Servings</span>
+                <span>⭐ 4.9 (82)</span>
+              </div>
+              <h3 class="recipe-title"><a href="recipes/fruit-salad.html">Rainbow Citrus Fruit Salad</a></h3>
+              <p class="recipe-excerpt">
+                A refreshing mosaic of berries, sliced kiwi, sweet mango, and fresh mint drizzled with honey-lime reduction.
+              </p>
+              <div class="recipe-footer">
+                <div class="author-chip">
+                  <span class="author-avatar" style="background:#fce7f3; color:#be185d;">M</span>
+                  <span>Team Collab</span>
+                </div>
+                <a href="recipes/fruit-salad.html" class="view-recipe-btn">Get Recipe →</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Git Collaboration Lab Highlight Banner -->
+    <section class="container">
+      <div class="collab-banner">
+        <div class="collab-banner-grid">
+          <div>
+            <div class="collab-badge">
+              <span>⚡ Git Collaboration Case Study</span>
+            </div>
+            <h2>Planned Merge Conflicts & Resolution</h2>
+            <p>
+              This website was intentionally engineered to test, capture, and resolve 3 core Git merge conflict scenarios: Same-Line HTML edits, CSS Property collisions, and File Modify/Delete conditions.
+            </p>
+            <ul class="collab-features-list">
+              <li><span class="check">✔</span> Scenario 1: Homepage Title Same-Line Conflict (<span class="code-pill">index.html</span>)</li>
+              <li><span class="check">✔</span> Scenario 2: Design Color Collisions (<span class="code-pill">style.css</span>)</li>
+              <li><span class="check">✔</span> Scenario 3: Modify vs Delete Conflict (<span class="code-pill">pasta.html</span>)</li>
+            </ul>
+            <a href="pages/collaboration.html" class="btn btn-primary" id="btn-view-lab">
+              Enter Git Collaboration Lab →
+            </a>
+          </div>
+
+          <div class="branch-visual-box">
+            <div style="color: #94a3b8; margin-bottom: 0.5rem;">// Git Branching Topology</div>
+            <div>* <span style="color: #4ade80;">main</span>: Release v1.0 Integrated</div>
+            <div>| \</div>
+            <div>|  * <span style="color: #fbbf24;">feature/breakfast-recipes</span> (Dev A)</div>
+            <div>|  |  [pancakes.html, heading tweak]</div>
+            <div>*  | <span style="color: #f472b6;">feature/dinner-recipes</span> (Dev B)</div>
+            <div>| /   [pasta.html edits, CSS styles]</div>
+            <div>* <span style="color: #38bdf8;">Resolved PR #1 & PR #2 Cleanly</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Contributors Section -->
+    <section class="team-section">
+      <div class="container">
+        <div class="section-header" style="justify-content: center; text-align: center;">
+          <div class="section-title-wrap">
+            <p class="section-subtitle">Collaborative Team</p>
+            <h2 class="section-title">Meet the Kitchen Developers</h2>
+          </div>
+        </div>
+
+        <div class="team-grid">
+          <!-- Developer A -->
+          <div class="contributor-card" id="card-dev-a">
+            <div class="contributor-avatar-large avatar-a">🥞</div>
+            <h3>Developer A</h3>
+            <p class="contributor-role">Breakfast Lead & Front-end Dev</p>
+            <div class="contributor-branch">
+              <span>🌿 branch: feature/breakfast-recipes</span>
+            </div>
+            <p>
+              Responsible for the breakfast recipe collection, buttermilk pancakes card, morning nutrition callouts, and homepage heading updates.
+            </p>
+          </div>
+
+          <!-- Developer B -->
+          <div class="contributor-card" id="card-dev-b">
+            <div class="contributor-avatar-large avatar-b">🍝</div>
+            <h3>Developer B</h3>
+            <p class="contributor-role">Dinner Lead & Styling Architect</p>
+            <div class="contributor-branch">
+              <span>🌿 branch: feature/dinner-recipes</span>
+            </div>
+            <p>
+              Curated the dinner series, fettuccine alfredo improvements, custom color palettes in style.css, and file cleanup operations.
+            </p>
+          </div>
+
+          <!-- Maintainer -->
+          <div class="contributor-card" id="card-maintainer">
+            <div class="contributor-avatar-large avatar-maintainer">🛡️</div>
+            <h3>Git Maintainer</h3>
+            <p class="contributor-role">Repository Lead & Conflict Arbiter</p>
+            <div class="contributor-branch">
+              <span>🌿 branch: main</span>
+            </div>
+            <p>
+              Structured repository conventions, orchestrated intentional merge conflicts, reviewed pull requests, and verified conflict-free deployment.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>CulinaryCraft</h4>
+          <p>
+            A team-built static recipe book showcasing clean HTML5, CSS3, and professional Git collaboration workflows with planned merge conflict resolutions.
+          </p>
+          <div class="git-status-tag">
+            <span>● Git main branch: Synced</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h5>Recipe Sections</h5>
+          <ul>
+            <li><a href="pages/recipes.html">All Recipes</a></li>
+            <li><a href="pages/breakfast.html">Breakfast Collection</a></li>
+            <li><a href="pages/desserts.html">Dessert Gallery</a></li>
+            <li><a href="recipes/pancakes.html">Buttermilk Pancakes</a></li>
+            <li><a href="recipes/pasta.html">Fettuccine Alfredo</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Git Collaboration</h5>
+          <ul>
+            <li><a href="pages/collaboration.html">Collaboration Lab</a></li>
+            <li><a href="docs/conflict-scenarios.md">Conflict Scenarios Guide</a></li>
+            <li><a href="docs/git-workflow.md">Git Team Workflow</a></li>
+            <li><a href="docs/project-report.md">Full Project Report</a></li>
+            <li><a href="README.md">Repository README</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Planned Conflicts</h5>
+          <ul>
+            <li><a href="pages/collaboration.html#scenario-1">Scenario 1: Same-Line HTML</a></li>
+            <li><a href="pages/collaboration.html#scenario-2">Scenario 2: CSS Property Conflict</a></li>
+            <li><a href="pages/collaboration.html#scenario-3">Scenario 3: Modify vs Delete File</a></li>
+            <li><a href="pages/collaboration.html#pr-workflow">GitHub Pull Request Flow</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Team Recipe Book Project. Built for Git Collaboration & Technical Review.</p>
+        <p>Pure HTML5 & Vanilla CSS3 • Zero Backend Dependencies</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

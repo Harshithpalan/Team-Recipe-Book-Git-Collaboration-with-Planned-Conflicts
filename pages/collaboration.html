@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git Collaboration Lab — Planned Merge Conflicts & Resolutions</title>
+  <meta name="description" content="Technical documentation and visual lab demonstrating planned Git merge conflicts, conflict markers, terminal commands, and resolution strategies.">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/recipes.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="../index.html" class="brand-logo">
+        <span class="logo-badge">⚡</span>
+        <span>Culinary<span class="accent">Craft</span></span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="recipes.html">All Recipes</a></li>
+          <li><a href="breakfast.html">Breakfast</a></li>
+          <li><a href="desserts.html">Desserts</a></li>
+          <li><a href="collaboration.html" class="active">Git Collab Lab</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#scenario-1" class="btn-lab">
+          <span>Jump to Scenarios</span>
+          <span class="git-badge-pill">↓</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Breadcrumbs -->
+  <div class="container">
+    <nav class="breadcrumb-nav">
+      <ul class="breadcrumb-list">
+        <li><a href="../index.html">Home</a></li>
+        <li class="breadcrumb-separator">/</li>
+        <li class="breadcrumb-current">Git Collaboration Lab</li>
+      </ul>
+    </nav>
+  </div>
+
+  <main>
+    <!-- Lab Hero -->
+    <section class="lab-hero">
+      <div class="container">
+        <div class="lab-badge-group">
+          <span class="tag tag-git">Git & GitHub Lab</span>
+          <span class="tag tag-breakfast">Dev A: Breakfast</span>
+          <span class="tag tag-dinner">Dev B: Dinner</span>
+          <span class="tag" style="background:#0284c7; color:white;">Repository Arbiter</span>
+        </div>
+        <h1>Git Collaboration Lab &amp;<br>Planned Conflict Scenarios</h1>
+        <p>
+          Real-world collaborative projects inevitably experience merge conflicts when team members edit the same lines, alter global styles, or rename and delete shared assets. This lab documents three engineered conflict scenarios, their anatomy in Git, and their systematic resolution.
+        </p>
+      </div>
+    </section>
+
+    <!-- Branching Topology Roadmap -->
+    <div class="container">
+      <div class="branch-roadmap-card">
+        <div class="workflow-header">
+          <h2>1. Team Branching Topology</h2>
+          <p>
+            Both Developer A and Developer B branched off the identical commit on <code class="code-pill">main</code>. Independent commits were authored concurrently, producing divergence points that guarantee conflicts upon merging.
+          </p>
+        </div>
+
+        <div class="branch-node-grid">
+          <!-- Node: main -->
+          <div class="branch-node">
+            <span class="branch-node-badge node-main">Branch: main</span>
+            <h3>Production Baseline</h3>
+            <p>
+              Contains the starter HTML structure, global CSS styles, and base recipes. Both developers branched from base commit <code class="code-pill">Initial Recipe Book</code>.
+            </p>
+            <div style="margin-top: 1rem; font-family: var(--font-code); font-size: 0.78rem; color: #475569;">
+              <div>• Base index.html</div>
+              <div>• Base css/style.css</div>
+              <div>• Base recipes/pasta.html</div>
+            </div>
+          </div>
+
+          <!-- Node: Dev A -->
+          <div class="branch-node">
+            <span class="branch-node-badge node-dev-a">Branch: feature/breakfast-recipes</span>
+            <h3>Developer A's Workspace</h3>
+            <p>
+              Authored breakfast collection (<code class="code-pill">pancakes.html</code>), modified the homepage heading, updated the recipe title style to forest green, and enhanced the pasta recipe.
+            </p>
+            <div style="margin-top: 1rem; font-family: var(--font-code); font-size: 0.78rem; color: #92400e;">
+              <div>+ pages/breakfast.html</div>
+              <div>+ recipes/pancakes.html</div>
+              <div>* Modified index.html (H2)</div>
+              <div>* Modified recipes/pasta.html</div>
+            </div>
+          </div>
+
+          <!-- Node: Dev B -->
+          <div class="branch-node">
+            <span class="branch-node-badge node-dev-b">Branch: feature/dinner-recipes</span>
+            <h3>Developer B's Workspace</h3>
+            <p>
+              Authored dinner collection, modified the same homepage heading differently, updated the recipe title style to amber brown, and pruned <code class="code-pill">recipes/pasta.html</code>.
+            </p>
+            <div style="margin-top: 1rem; font-family: var(--font-code); font-size: 0.78rem; color: #9d174d;">
+              <div>+ dinner catalog cards</div>
+              <div>* Modified index.html (H2)</div>
+              <div>* Modified style.css (.recipe-title)</div>
+              <div>- Deleted recipes/pasta.html</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================================================
+           SCENARIO 1: SAME-LINE HTML CONFLICT
+           ========================================================================== -->
+      <section class="scenario-card" id="scenario-1">
+        <div class="scenario-header">
+          <div class="scenario-title-group">
+            <span class="tag tag-git" style="margin-bottom:0.5rem;">Scenario 1: Same-Line Content Conflict</span>
+            <h3>Conflicting Homepage Section Title in <code>index.html</code></h3>
+            <p>Two developers concurrently altered line 105 in <code>index.html</code> to different text values.</p>
+          </div>
+          <span class="tag" style="background:#fee2e2; color:#b91c1c; font-weight:800;">High Occurrence in Teams</span>
+        </div>
+
+        <div class="diff-comparison-grid">
+          <!-- Developer A -->
+          <div class="diff-box">
+            <div class="diff-box-header diff-header-a">
+              <span>Developer A (feature/breakfast-recipes)</span>
+              <span>Commit: a1f809c</span>
+            </div>
+            <pre class="diff-code-body">
+&lt;div class="section-title-wrap"&gt;
+  &lt;p class="section-subtitle"&gt;Chef's Highlights&lt;/p&gt;
+<span style="color: #4ade80;">- &lt;h2 class="section-title"&gt;Our Favorite Recipes&lt;/h2&gt;</span>
+<span style="color: #fbbf24;">+ &lt;h2 class="section-title"&gt;Breakfast Favorites&lt;/h2&gt;</span>
+&lt;/div&gt;
+            </pre>
+          </div>
+
+          <!-- Developer B -->
+          <div class="diff-box">
+            <div class="diff-box-header diff-header-b">
+              <span>Developer B (feature/dinner-recipes)</span>
+              <span>Commit: c4e321b</span>
+            </div>
+            <pre class="diff-code-body">
+&lt;div class="section-title-wrap"&gt;
+  &lt;p class="section-subtitle"&gt;Chef's Highlights&lt;/p&gt;
+<span style="color: #4ade80;">- &lt;h2 class="section-title"&gt;Our Favorite Recipes&lt;/h2&gt;</span>
+<span style="color: #f472b6;">+ &lt;h2 class="section-title"&gt;Community Recipe Collection&lt;/h2&gt;</span>
+&lt;/div&gt;
+            </pre>
+          </div>
+        </div>
+
+        <!-- Conflict Markers in File -->
+        <div class="diff-box" style="margin-bottom: 1.5rem;">
+          <div class="diff-box-header diff-header-conflict">
+            <span>Git Conflict Marker Output in index.html (when merging branch B into main)</span>
+            <span>CONFLICT (content)</span>
+          </div>
+          <pre class="diff-code-body">
+<span class="conflict-marker-highlight">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD (from feature/breakfast-recipes merge)</span>
+&lt;h2 class="section-title"&gt;Breakfast Favorites&lt;/h2&gt;
+<span class="conflict-sep-highlight">=======</span>
+&lt;h2 class="section-title"&gt;Community Recipe Collection&lt;/h2&gt;
+<span class="conflict-marker-highlight">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/dinner-recipes</span>
+          </pre>
+        </div>
+
+        <!-- Resolution Box -->
+        <div class="resolution-box">
+          <h4>✔ Resolution &amp; Arbiter Decision</h4>
+          <p>
+            <strong>Decision Rationale:</strong> Selecting <em>"Breakfast Favorites"</em> would falsely misrepresent the page, as it also features dinner pastas and fruit desserts. Choosing <em>"Community Recipe Collection"</em> accurately encompasses all past and future contributions from both developers.
+          </p>
+          <div class="diff-box" style="margin: 1rem 0;">
+            <div class="diff-box-header diff-header-resolved">
+              <span>Final Merged State in index.html</span>
+              <span>Resolved &amp; Clean</span>
+            </div>
+            <pre class="diff-code-body">
+<span class="resolved-highlight">&lt;h2 class="section-title"&gt;Community Recipe Collection&lt;/h2&gt;</span>
+            </pre>
+          </div>
+          <p><strong>Terminal Resolution Commands:</strong></p>
+          <div class="cmd-snippet">
+git switch main
+git merge --no-ff feature/breakfast-recipes   # Merges cleanly
+git merge --no-ff feature/dinner-recipes      # Git flags CONFLICT in index.html
+# Edit index.html: remove conflict markers (&lt;&lt;&lt;&lt;&lt;&lt;&lt;, =======, &gt;&gt;&gt;&gt;&gt;&gt;&gt;)
+git add index.html
+git commit -m "Resolve recipe homepage title conflict: unify as Community Recipe Collection"
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SCENARIO 2: SHARED CSS PROPERTY CONFLICT
+           ========================================================================== -->
+      <section class="scenario-card" id="scenario-2">
+        <div class="scenario-header">
+          <div class="scenario-title-group">
+            <span class="tag tag-git" style="margin-bottom:0.5rem;">Scenario 2: CSS Property Conflict</span>
+            <h3>Conflicting Brand Color on <code>.recipe-title</code> in <code>css/style.css</code></h3>
+            <p>Both developers customized the primary header styling in the shared stylesheet.</p>
+          </div>
+          <span class="tag" style="background:#fef3c7; color:#92400e; font-weight:800;">Styling Collisions</span>
+        </div>
+
+        <div class="diff-comparison-grid">
+          <!-- Developer A CSS -->
+          <div class="diff-box">
+            <div class="diff-box-header diff-header-a">
+              <span>Developer A: Organic Forest Green</span>
+              <span>Branch: feature/breakfast-recipes</span>
+            </div>
+            <pre class="diff-code-body">
+/* Developer A Proposal */
+.recipe-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+<span style="color: #4ade80;">- color: #333333;</span>
+<span style="color: #fbbf24;">+ color: #2e7d32; /* Organic Herb Green */</span>
+}
+            </pre>
+          </div>
+
+          <!-- Developer B CSS -->
+          <div class="diff-box">
+            <div class="diff-box-header diff-header-b">
+              <span>Developer B: Warm Amber Brown</span>
+              <span>Branch: feature/dinner-recipes</span>
+            </div>
+            <pre class="diff-code-body">
+/* Developer B Proposal */
+.recipe-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+<span style="color: #4ade80;">- color: #333333;</span>
+<span style="color: #f472b6;">+ color: #b45309; /* Warm Amber Roast */</span>
+}
+            </pre>
+          </div>
+        </div>
+
+        <!-- Git Conflict Marker -->
+        <div class="diff-box" style="margin-bottom: 1.5rem;">
+          <div class="diff-box-header diff-header-conflict">
+            <span>Git Conflict Marker in css/style.css</span>
+            <span>CONFLICT (content) in css/style.css</span>
+          </div>
+          <pre class="diff-code-body">
+.recipe-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+<span class="conflict-marker-highlight">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
+  color: #2e7d32;
+<span class="conflict-sep-highlight">=======</span>
+  color: #b45309;
+<span class="conflict-marker-highlight">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/dinner-recipes</span>
+}
+          </pre>
+        </div>
+
+        <!-- Resolution Box -->
+        <div class="resolution-box">
+          <h4>✔ Resolution &amp; Arbiter Decision</h4>
+          <p>
+            <strong>Decision Rationale:</strong> The design team tested both colors with the Web Content Accessibility Guidelines (WCAG). <code class="code-pill">#2e7d32</code> (Forest Green) maintains a superior contrast ratio of <strong>5.4:1</strong> against light backgrounds and harmonizes with the culinary theme. We also provided hover states to incorporate the warm amber accents.
+          </p>
+          <div class="diff-box" style="margin: 1rem 0;">
+            <div class="diff-box-header diff-header-resolved">
+              <span>Resolved Declaration in css/style.css</span>
+              <span>Accessible &amp; Cohesive</span>
+            </div>
+            <pre class="diff-code-body">
+<span class="resolved-highlight">.recipe-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #2e7d32; /* Selected green palette */
+  margin-bottom: 0.65rem;
+}</span>
+            </pre>
+          </div>
+          <p><strong>Terminal Resolution Commands:</strong></p>
+          <div class="cmd-snippet">
+# Inspect the conflict in style.css
+git status
+# Open css/style.css, retain color: #2e7d32, and remove the marker lines
+git add css/style.css
+git commit -m "Resolve recipe title style conflict: adopt accessible #2e7d32 with warm hover accent"
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SCENARIO 3: MODIFY VS DELETE CONFLICT
+           ========================================================================== -->
+      <section class="scenario-card" id="scenario-3">
+        <div class="scenario-header">
+          <div class="scenario-title-group">
+            <span class="tag tag-git" style="margin-bottom:0.5rem;">Scenario 3: Modify vs Delete Collision</span>
+            <h3>Conflict on Shared File <code>recipes/pasta.html</code></h3>
+            <p>Developer A revised and upgraded the recipe while Developer B deleted the file.</p>
+          </div>
+          <span class="tag" style="background:#ede9fe; color:#6d28d9; font-weight:800;">Tree Structural Conflict</span>
+        </div>
+
+        <div class="diff-comparison-grid">
+          <!-- Developer A Action -->
+          <div class="diff-box">
+            <div class="diff-box-header diff-header-a">
+              <span>Developer A Action</span>
+              <span>Updated &amp; Expanded Content</span>
+            </div>
+            <pre class="diff-code-body">
+// Developer A enhanced recipes/pasta.html:
++ Added Parmigiano-Reggiano measurements
++ Added step-by-step emulsification instructions
++ Added allergen tags &amp; wine pairing notes
+File size increased: +1,240 bytes
+            </pre>
+          </div>
+
+          <!-- Developer B Action -->
+          <div class="diff-box">
+            <div class="diff-box-header diff-header-b">
+              <span>Developer B Action</span>
+              <span>Deleted File</span>
+            </div>
+            <pre class="diff-code-body">
+// Developer B pruned the directory:
+$ git rm recipes/pasta.html
+$ git commit -m "Remove legacy pasta draft file"
+File status: DELETED
+            </pre>
+          </div>
+        </div>
+
+        <!-- Git Status Output -->
+        <div class="diff-box" style="margin-bottom: 1.5rem;">
+          <div class="diff-box-header diff-header-conflict">
+            <span>Git Merge Output (Modify/Delete Conflict)</span>
+            <span>CONFLICT (modify/delete)</span>
+          </div>
+          <pre class="diff-code-body">
+Auto-merging recipes/pasta.html
+<span style="color:#ef4444; font-weight:bold;">CONFLICT (modify/delete): recipes/pasta.html deleted in feature/dinner-recipes
+and modified in HEAD. Version HEAD of recipes/pasta.html left in tree.</span>
+Automatic merge failed; fix conflicts and then commit the result.
+          </pre>
+        </div>
+
+        <!-- Resolution Box -->
+        <div class="resolution-box">
+          <h4>✔ Resolution &amp; Arbiter Decision</h4>
+          <p>
+            <strong>Decision Rationale:</strong> Deleting the file was an inadvertent pruning mistake on Developer B's branch. Developer A's revisions contain valuable, tested culinary instructions and rich nutritional data. The maintainer explicitly retains Developer A's modified version of <code class="code-pill">recipes/pasta.html</code>.
+          </p>
+          <div class="diff-box" style="margin: 1rem 0;">
+            <div class="diff-box-header diff-header-resolved">
+              <span>File Preservation Verification</span>
+              <span>File Kept &amp; Tracked</span>
+            </div>
+            <pre class="diff-code-body">
+<span class="resolved-highlight">$ git add recipes/pasta.html
+$ git status
+On branch main
+Changes to be committed:
+	modified:   recipes/pasta.html</span>
+            </pre>
+          </div>
+          <p><strong>Terminal Resolution Commands:</strong></p>
+          <div class="cmd-snippet">
+# In merge conflict state:
+git status
+# To KEEP the modified file:
+git add recipes/pasta.html
+git commit -m "Resolve pasta recipe modify-delete conflict: retain Developer A's enhanced recipe"
+
+# (Alternative: If deletion had been preferred, the command would be: git rm recipes/pasta.html)
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           GITHUB PULL REQUEST WORKFLOW & VIVA DEFENSE
+           ========================================================================== -->
+      <section class="scenario-card" id="pr-workflow">
+        <div class="scenario-header">
+          <div class="scenario-title-group">
+            <span class="tag tag-git" style="margin-bottom:0.5rem;">GitHub Workflow &amp; Best Practices</span>
+            <h3>GitHub Pull Request (PR) &amp; Code Review Lifecycle</h3>
+            <p>How the team replicates and documents these findings using GitHub Web UI &amp; CLI.</p>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+          <div style="background: var(--bg-subtle); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+            <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.5rem;">1. Feature Branch Push</h4>
+            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
+              Each developer pushes their branch to GitHub:
+              <br><code class="code-pill">git push -u origin feature/breakfast-recipes</code>
+              <br><code class="code-pill">git push -u origin feature/dinner-recipes</code>
+            </p>
+          </div>
+
+          <div style="background: var(--bg-subtle); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+            <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.5rem;">2. PR Review &amp; Merge PR #1</h4>
+            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
+              Developer A opens PR #1 to <code class="code-pill">main</code>. Peer review approves breakfast cards. PR #1 merges cleanly with fast-forward or merge commit.
+            </p>
+          </div>
+
+          <div style="background: var(--bg-subtle); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+            <h4 style="font-size: 1.1rem; font-weight: 700; color: #b91c1c; margin-bottom: 0.5rem;">3. PR #2 Conflict Trigger</h4>
+            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
+              Developer B opens PR #2 to <code class="code-pill">main</code>. GitHub detects conflicting files: <em>"Can't automatically merge. Don't worry, you can still create the pull request."</em>
+            </p>
+          </div>
+
+          <div style="background: var(--bg-subtle); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+            <h4 style="font-size: 1.1rem; font-weight: 700; color: #15803d; margin-bottom: 0.5rem;">4. Synchronize &amp; Clear</h4>
+            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
+              Developer B pulls latest <code class="code-pill">main</code> into their local branch, resolves the markers, commits, and pushes. The GitHub PR automatically switches to green <em>"Able to merge"</em>!
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© 2026 CulinaryCraft Git Lab • Technical Evidence for Merge Conflict Assessment</p>
+        <p><a href="../index.html" style="color:#38bdf8;">← Return to Main Recipe Book</a></p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
