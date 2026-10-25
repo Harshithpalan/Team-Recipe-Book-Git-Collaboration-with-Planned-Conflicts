@@ -617,7 +617,7 @@ ul, ol {
   font-family: var(--font-heading);
   font-size: 1.35rem;
   font-weight: 700;
-  color: #333333; /* Base color before conflict branches */
+  color: #2e7d32; /* Organic Forest Green (Dev A) */
   margin-bottom: 0.65rem;
   line-height: 1.3;
   transition: var(--transition);
